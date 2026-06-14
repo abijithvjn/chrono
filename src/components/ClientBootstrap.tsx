@@ -7,8 +7,20 @@ export function ClientBootstrap() {
   const setMoment = useStore((s) => s.setMoment);
   const setPalette = useStore((s) => s.setPalette);
 
-  // apply theme
-  useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
+  // apply theme — "system" follows OS/browser; falls back to light.
+  useEffect(() => {
+    const mq = typeof window !== "undefined" && window.matchMedia
+      ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+    const apply = () => {
+      const resolved = theme === "system" ? (mq && mq.matches ? "dark" : "light") : theme;
+      document.documentElement.dataset.theme = resolved;
+    };
+    apply();
+    if (theme === "system" && mq) {
+      mq.addEventListener?.("change", apply);
+      return () => mq.removeEventListener?.("change", apply);
+    }
+  }, [theme]);
 
   // restore moment from shareable URL hash (#t=<ms>)
   useEffect(() => {

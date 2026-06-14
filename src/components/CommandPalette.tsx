@@ -29,6 +29,7 @@ export function CommandPalette() {
       { id: "share", label: "Copy shareable link", run: () => copy(window.location.href, "Link copied") },
       { id: "sod", label: "Jump to start of day (UTC)", run: () => setMoment(startOfDay(), undefined, "") },
       { id: "eod", label: "Jump to end of day (UTC)", run: () => setMoment(endOfDay(), undefined, "") },
+      { id: "t-system", label: "Theme: System", run: () => setTheme("system" as Theme) },
       { id: "t-dark", label: "Theme: Dark", run: () => setTheme("dark" as Theme) },
       { id: "t-amoled", label: "Theme: AMOLED", run: () => setTheme("amoled" as Theme) },
       { id: "t-light", label: "Theme: Light", run: () => setTheme("light" as Theme) },

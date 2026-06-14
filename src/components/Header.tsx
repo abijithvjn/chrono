@@ -1,12 +1,13 @@
 "use client";
-import { Command, Monitor, Moon, Sun } from "lucide-react";
+import { Command, Contrast, Monitor, Moon, Sun } from "lucide-react";
 import { useStore, type Theme } from "@/store/useStore";
 import { useMounted } from "@/lib/useMounted";
 
-const THEMES: { id: Theme; icon: typeof Sun }[] = [
-  { id: "dark", icon: Moon },
-  { id: "amoled", icon: Monitor },
-  { id: "light", icon: Sun },
+const THEMES: { id: Theme; icon: typeof Sun; title: string }[] = [
+  { id: "system", icon: Monitor, title: "System" },
+  { id: "light", icon: Sun, title: "Light" },
+  { id: "dark", icon: Moon, title: "Dark" },
+  { id: "amoled", icon: Contrast, title: "AMOLED" },
 ];
 
 export function Header() {
@@ -31,8 +32,8 @@ export function Header() {
             <Command size={13} /> Command <kbd className="rounded border border-border px-1 font-mono text-[10px]">⌘K</kbd>
           </button>
           <div className="flex rounded-lg border border-border bg-surface-2 p-0.5">
-            {THEMES.map(({ id, icon: Icon }) => (
-              <button key={id} onClick={() => setTheme(id)} title={id} aria-label={`${id} theme`}
+            {THEMES.map(({ id, icon: Icon, title }) => (
+              <button key={id} onClick={() => setTheme(id)} title={title} aria-label={`${title} theme`}
                 className={`grid h-7 w-7 place-items-center rounded-md transition ${mounted && theme === id ? "bg-accent/20 text-fg" : "text-muted hover:text-fg"}`}>
                 <Icon size={14} />
               </button>

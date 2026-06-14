@@ -2,7 +2,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Theme = "dark" | "light" | "amoled";
+// "system" follows the OS/browser preference; the rest are explicit.
+export type Theme = "system" | "dark" | "light" | "amoled";
 
 export interface HistoryItem { input: string; ms: number; at: number; }
 
@@ -29,7 +30,7 @@ export const useStore = create<State>()(
       ns: BigInt(Date.now()) * 1_000_000n,
       lastInput: "",
       displayTz: "UTC",
-      theme: "dark",
+      theme: "system",
       paletteOpen: false,
       history: [],
 

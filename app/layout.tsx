@@ -22,9 +22,13 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Set the resolved theme before first paint to avoid a flash.
+  const themeScript = `!function(){try{var p="system",r=localStorage.getItem("chrono");if(r){var s=JSON.parse(r).state;if(s&&s.theme)p=s.theme;}var d=p==="system"?(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):p;document.documentElement.dataset.theme=d;}catch(e){document.documentElement.dataset.theme="light";}}();`;
+
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <ClientBootstrap />
         {children}
         <CommandPalette />
