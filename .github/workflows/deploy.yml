@@ -26,7 +26,9 @@ jobs:
       - name: Compute base path
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
-          if [[ "$REPO" == *.github.io ]]; then
+          if [ -f public/CNAME ]; then
+            echo "PAGES_BASE_PATH=" >> "$GITHUB_ENV"      # custom domain → root
+          elif [[ "$REPO" == *.github.io ]]; then
             echo "PAGES_BASE_PATH=" >> "$GITHUB_ENV"      # user/org site → root
           else
             echo "PAGES_BASE_PATH=/$REPO" >> "$GITHUB_ENV" # project site → /<repo>
