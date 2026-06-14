@@ -8,6 +8,7 @@ import { OffsetCalc, DurationCalc, RelativeCalc } from "./tools/OffsetDuration";
 import { CronPreview } from "./tools/CronPreview";
 import { BatchConverter } from "./tools/BatchConverter";
 import { History } from "./tools/History";
+import { SiteFooter } from "./PageShell";
 import { useMounted } from "@/lib/useMounted";
 
 export function Studio() {
@@ -19,6 +20,7 @@ export function Studio() {
         style={{ background: "radial-gradient(1000px 520px at 85% -8%, var(--accent-glow), transparent 60%), radial-gradient(760px 460px at 0% 0%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 55%)" }} />
       <Header />
       <main className="w-full px-5 py-8 sm:px-8 lg:px-12">
+        <h1 className="sr-only">Unix Timestamp Converter — epoch time to date, ISO 8601, and back</h1>
         {!mounted ? (
           <div className="space-y-5">
             <div className="h-44 animate-pulse rounded-2xl border border-border bg-surface" />
@@ -41,10 +43,8 @@ export function Studio() {
           </div>
         )}
 
-        <footer className="mt-12 text-center text-[12px] text-faint">
-          Chrono · everything runs locally in your browser · no ads, no tracking, works offline
-        </footer>
       </main>
+      <SiteFooter />
     </div>
   );
 }

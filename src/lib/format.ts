@@ -56,6 +56,25 @@ export function localTzName(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
 }
 
+// Deterministic, UTC-based representations safe to render at build/SSR time
+// (no "now"-relative or local-zone fields that would vary by machine).
+export function machineReprs(ms: number, ns: bigint): { label: string; value: string }[] {
+  const s = ns / 1_000_000_000n;
+  const abs = s < 0n ? -s : s;
+  return [
+    { label: "UTC", value: fmtZone(ms, "UTC") },
+    { label: "ISO 8601 (UTC)", value: new Date(ms).toISOString() },
+    { label: "RFC 3339 (UTC)", value: isoWithOffset(ms, "UTC") },
+    { label: "RFC 2822", value: new Date(ms).toUTCString().replace("GMT", "+0000") },
+    { label: "Unix seconds", value: s.toString() },
+    { label: "Unix milliseconds", value: (ns / 1_000_000n).toString() },
+    { label: "Microseconds", value: (ns / 1_000n).toString() },
+    { label: "Nanoseconds", value: ns.toString() },
+    { label: "Hex (seconds)", value: "0x" + abs.toString(16) },
+    { label: "Binary (seconds)", value: abs.toString(2) },
+  ];
+}
+
 export function representations(ms: number, ns: bigint, displayTz: string): Repr[] {
   const local = localTzName();
   const s = ns / 1_000_000_000n;

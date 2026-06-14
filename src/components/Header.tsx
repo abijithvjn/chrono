@@ -1,7 +1,14 @@
 "use client";
+import Link from "next/link";
 import { Command, Contrast, Monitor, Moon, Sun } from "lucide-react";
 import { useStore, type Theme } from "@/store/useStore";
 import { useMounted } from "@/lib/useMounted";
+
+const NAV = [
+  { href: "/convert", label: "Conversions" },
+  { href: "/code", label: "Languages" },
+  { href: "/timezone", label: "Time Zones" },
+];
 
 const THEMES: { id: Theme; icon: typeof Sun; title: string }[] = [
   { id: "system", icon: Monitor, title: "System" },
@@ -26,6 +33,13 @@ export function Header() {
             <div className="text-[11px] text-muted">the timestamp toolkit</div>
           </div>
         </div>
+        <nav className="hidden items-center gap-1 text-[13px] md:flex">
+          {NAV.map((n) => (
+            <Link key={n.href} href={n.href} className="rounded-lg px-2.5 py-1.5 text-muted transition hover:bg-surface-2 hover:text-fg">
+              {n.label}
+            </Link>
+          ))}
+        </nav>
         <div className="flex items-center gap-2">
           <button onClick={() => setPalette(true)}
             className="hidden items-center gap-2 rounded-lg border border-border bg-surface-2 px-3 py-1.5 text-[12px] text-muted transition hover:text-fg sm:flex">

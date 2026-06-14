@@ -22,10 +22,17 @@ export function ClientBootstrap() {
     }
   }, [theme]);
 
-  // restore moment from shareable URL hash (#t=<ms>)
+  // restore from shareable URL hash (#t=<ms>) or ?q=<value> (SearchAction)
   useEffect(() => {
     const m = window.location.hash.match(/t=(-?\d+)/);
-    if (m) setMoment(parseInt(m[1], 10), undefined, "");
+    if (m) { setMoment(parseInt(m[1], 10), undefined, ""); return; }
+    const q = new URLSearchParams(window.location.search).get("q");
+    if (q) {
+      import("@/lib/detect").then(({ detect }) => {
+        const d = detect(q);
+        if (d) setMoment(d.ms, d.ns, q);
+      });
+    }
   }, [setMoment]);
 
   // global keyboard: Cmd/Ctrl+K → command palette
