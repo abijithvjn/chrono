@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function toast(msg: string) {
   if (typeof document === "undefined") return;
@@ -28,7 +28,9 @@ function dec(s: string): unknown { return JSON.parse(decodeURIComponent(escape(a
 // Skips encoding when the payload is too large for a URL.
 export function useSharedState<T extends Record<string, string>>(initial: T) {
   const [state, setState] = useState<T>(initial);
+  const mounted = useRef(false);
 
+  // Read shared state from the hash once, after mount (avoids SSR mismatch).
   useEffect(() => {
     try {
       const h = new URLSearchParams(window.location.hash.slice(1)).get("s");
@@ -36,18 +38,19 @@ export function useSharedState<T extends Record<string, string>>(initial: T) {
     } catch { /* ignore bad hash */ }
   }, []);
 
-  const update = (patch: Partial<T>) =>
-    setState((prev) => {
-      const next = { ...prev, ...patch };
-      try {
-        const encoded = enc(next);
-        const p = new URLSearchParams(window.location.hash.slice(1));
-        if (encoded.length < 1800) p.set("s", encoded); else p.delete("s");
-        const h = p.toString();
-        window.history.replaceState(null, "", h ? "#" + h : window.location.pathname);
-      } catch { /* ignore */ }
-      return next;
-    });
+  // Write to the URL in an effect — never inside the render/updater phase.
+  useEffect(() => {
+    if (!mounted.current) { mounted.current = true; return; }
+    try {
+      const encoded = enc(state);
+      const p = new URLSearchParams(window.location.hash.slice(1));
+      if (encoded.length < 1800) p.set("s", encoded); else p.delete("s");
+      const h = p.toString();
+      window.history.replaceState(null, "", h ? "#" + h : window.location.pathname);
+    } catch { /* ignore */ }
+  }, [state]);
+
+  const update = (patch: Partial<T>) => setState((prev) => ({ ...prev, ...patch }));
 
   return [state, update] as const;
 }
