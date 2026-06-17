@@ -186,16 +186,16 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
 
   "color-converter": {
     intro:
-      "The Color Converter translates a color between the formats front-end developers use every day — HEX, RGB and HSL — and previews it live. HEX is compact, RGB maps to channels, and HSL makes lightness and saturation tweaks intuitive.",
+      "The Color Picker & Converter lets you pick a color visually and translate it between the formats front-end developers use every day — HEX, RGB and HSL — with a live preview. Click the swatch to open the picker, or, on supported browsers, use the screen eyedropper to grab any color from your display. HEX is compact, RGB maps to channels, and HSL makes lightness and saturation tweaks intuitive.",
     benefits: [
-      "Convert between HEX, RGB and HSL instantly.",
-      "Live swatch preview and a native color picker.",
-      "Paste any supported format and read the rest.",
-      "No uploads — everything is computed locally.",
+      "Visual color picker — click the swatch to choose a color.",
+      "Screen eyedropper to sample any pixel (where supported).",
+      "Convert between HEX, RGB and HSL instantly with a live preview.",
+      "Paste any supported format and read the rest — all computed locally.",
     ],
     howto: [
-      { name: "Enter a color", text: "Type a HEX, RGB or HSL value, or use the color picker." },
-      { name: "Read every format", text: "The other formats update instantly alongside a preview." },
+      { name: "Pick or type a color", text: "Click the swatch to open the color picker, use the eyedropper, or type a HEX, RGB or HSL value." },
+      { name: "Read every format", text: "The other formats update instantly alongside the preview." },
       { name: "Copy", text: "Copy the format you need into your stylesheet." },
     ],
     notes:

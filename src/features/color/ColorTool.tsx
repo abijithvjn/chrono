@@ -1,5 +1,6 @@
 "use client";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Pipette } from "lucide-react";
 import { ToolBar } from "@/components/app/ToolBar";
 import { CopyButton } from "@/components/ui/primitives";
 import { useSharedState } from "@/lib/share";
@@ -68,16 +69,44 @@ export function ColorTool() {
       })()
     : [];
 
+  const hex = rgb ? rgbToHex(rgb) : "#000000";
+  const [hasEyeDropper, setHasEyeDropper] = useState(false);
+  useEffect(() => { setHasEyeDropper(typeof window !== "undefined" && "EyeDropper" in window); }, []);
+  async function pickFromScreen() {
+    try {
+      const ED = (window as unknown as { EyeDropper: new () => { open: () => Promise<{ sRGBHex: string }> } }).EyeDropper;
+      const res = await new ED().open();
+      set({ value: res.sRGBHex });
+    } catch { /* user cancelled */ }
+  }
+
   return (
     <div className="space-y-4">
       <ToolBar getCopy={() => rows[0]?.value ?? ""} onReset={() => set({ value: "#3B82F6" })} />
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="h-16 w-16 shrink-0 rounded-xl border border-border" style={{ background: rgb ? rgbToHex(rgb) : "transparent" }} />
-        <input value={st.value} onChange={(e) => set({ value: e.target.value })} spellCheck={false}
-          placeholder="#3B82F6, rgb(59,130,246) or hsl(217,91%,60%)"
-          className="min-w-0 flex-1 rounded-xl border border-border bg-surface-2 px-4 py-3 font-mono text-[14px] outline-none focus:border-accent/60" />
-        <input type="color" value={rgb ? rgbToHex(rgb) : "#000000"} onChange={(e) => set({ value: e.target.value })}
-          aria-label="Pick a color" className="h-12 w-12 shrink-0 cursor-pointer rounded-lg border border-border bg-transparent" />
+
+      {/* Color picker — click the swatch to open the native picker */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+        <label title="Click to pick a color"
+          className="relative h-24 w-full shrink-0 cursor-pointer overflow-hidden rounded-2xl border border-border shadow-soft transition hover:border-edge sm:w-44"
+          style={{ background: hex }}>
+          <input type="color" value={hex} onChange={(e) => set({ value: e.target.value })} aria-label="Pick a color"
+            className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
+          <span className="pointer-events-none absolute bottom-2 left-2 rounded-md bg-black/35 px-2 py-0.5 font-mono text-[11px] text-white backdrop-blur-sm">{hex}</span>
+        </label>
+        <div className="flex flex-1 flex-col gap-2">
+          <input value={st.value} onChange={(e) => set({ value: e.target.value })} spellCheck={false}
+            placeholder="#3B82F6, rgb(59,130,246) or hsl(217,91%,60%)"
+            className="w-full rounded-xl border border-border bg-surface-2 px-4 py-3 font-mono text-[14px] outline-none focus:border-accent/60" />
+          <div className="flex items-center gap-2 text-[12.5px] text-faint">
+            <span>Click the swatch to open the picker, or type any format.</span>
+            {hasEyeDropper && (
+              <button onClick={pickFromScreen}
+                className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-2 px-2.5 py-1 text-muted transition hover:text-fg">
+                <Pipette size={13} /> Eyedropper
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       {rgb ? (

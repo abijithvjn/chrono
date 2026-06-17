@@ -199,17 +199,17 @@ export const TOOLS: Tool[] = [
     slug: "color-converter",
     name: "Color Converter",
     category: "Converters",
-    short: "Convert colors between HEX, RGB and HSL with a preview.",
+    short: "Pick a color and convert between HEX, RGB and HSL.",
     icon: Palette,
     accent: "#D946EF",
-    keywords: ["color converter", "hex to rgb", "rgb to hex", "hsl converter", "hex to hsl", "color picker online"],
-    metaTitle: "Color Converter - HEX to RGB to HSL Online | DevToolsKit",
+    keywords: ["color picker", "color converter", "html color picker", "hex to rgb", "rgb to hex", "hsl converter", "hex to hsl", "eyedropper"],
+    metaTitle: "Color Picker & Converter - HEX, RGB & HSL Online | DevToolsKit",
     metaDescription:
-      "Free online Color Converter. Convert colors between HEX, RGB and HSL with a live preview and a color picker. Instant, private and browser-based.",
+      "Free online Color Picker and Converter. Pick a color visually (or grab one from your screen with the eyedropper) and convert between HEX, RGB and HSL with a live preview. Instant, private and browser-based.",
     faqs: [
-      { q: "Which formats are supported?", a: "HEX (#rrggbb), RGB (rgb(r,g,b)) and HSL (hsl(h,s%,l%)). Paste any of them and the others update instantly." },
+      { q: "Is there a color picker?", a: "Yes — click the swatch to open a visual color picker, and on supported browsers use the eyedropper to grab any color from your screen." },
+      { q: "Which formats are supported?", a: "HEX (#rrggbb), RGB (rgb(r,g,b)) and HSL (hsl(h,s%,l%)). Pick or paste any of them and the others update instantly." },
       { q: "Does it support alpha?", a: "This converter focuses on opaque colors; for alpha you can append it to the HEX (#rrggbbaa) in most browsers." },
-      { q: "Can I pick a color visually?", a: "Yes — use the built-in color picker and read off every format." },
     ],
   },
   {
