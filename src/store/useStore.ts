@@ -30,7 +30,7 @@ export const useStore = create<State>()(
       ns: BigInt(Date.now()) * 1_000_000n,
       lastInput: "",
       displayTz: "UTC",
-      theme: "system",
+      theme: "light",
       paletteOpen: false,
       history: [],
 

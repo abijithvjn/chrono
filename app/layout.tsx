@@ -44,7 +44,7 @@ const appLd = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const themeScript = `!function(){try{var p="system",r=localStorage.getItem("chrono");if(r){var s=JSON.parse(r).state;if(s&&s.theme)p=s.theme;}var d=p==="system"?(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):p;document.documentElement.dataset.theme=d;}catch(e){document.documentElement.dataset.theme="light";}}();`;
+  const themeScript = `!function(){try{var p="light",r=localStorage.getItem("chrono");if(r){var s=JSON.parse(r).state;if(s&&s.theme)p=s.theme;}var d=p==="system"?(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):p;document.documentElement.dataset.theme=d;}catch(e){document.documentElement.dataset.theme="light";}}();`;
 
   return (
     <html lang="en" data-theme="light" suppressHydrationWarning>
