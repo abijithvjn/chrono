@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { AppLayout } from "@/components/app/AppLayout";
-import { ToolPage } from "@/components/app/ToolPage";
-import { EpochTool } from "@/features/epoch/EpochTool";
+import dynamic from "next/dynamic";
+import { WorkspaceLayout } from "@/components/app/WorkspaceLayout";
+import { ToolSeo } from "@/components/app/ToolSeo";
+import { ToolSkeleton } from "@/components/app/ToolSkeleton";
 import { toolBySlug } from "@/tools/registry";
 import { canonical } from "@/lib/site";
+
+const EpochTool = dynamic(() => import("@/features/epoch/EpochTool").then((m) => m.EpochTool), { loading: () => <ToolSkeleton /> });
 
 const t = toolBySlug("epoch-converter")!;
 export const metadata: Metadata = {
@@ -13,5 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <AppLayout><ToolPage slug="epoch-converter"><EpochTool /></ToolPage></AppLayout>;
+  return (
+    <WorkspaceLayout slug="epoch-converter">
+      <EpochTool />
+      <ToolSeo slug="epoch-converter" />
+    </WorkspaceLayout>
+  );
 }

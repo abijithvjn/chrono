@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { AppLayout } from "@/components/app/AppLayout";
-import { ToolPage } from "@/components/app/ToolPage";
-import { DiffTool } from "@/features/diff/DiffTool";
+import dynamic from "next/dynamic";
+import { WorkspaceLayout } from "@/components/app/WorkspaceLayout";
+import { ToolSeo } from "@/components/app/ToolSeo";
+import { ToolSkeleton } from "@/components/app/ToolSkeleton";
 import { toolBySlug } from "@/tools/registry";
 import { canonical } from "@/lib/site";
+
+const DiffTool = dynamic(() => import("@/features/diff/DiffTool").then((m) => m.DiffTool), { loading: () => <ToolSkeleton /> });
 
 const t = toolBySlug("diff-checker")!;
 export const metadata: Metadata = {
@@ -13,5 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <AppLayout><ToolPage slug="diff-checker"><DiffTool /></ToolPage></AppLayout>;
+  return (
+    <WorkspaceLayout slug="diff-checker">
+      <DiffTool />
+      <ToolSeo slug="diff-checker" />
+    </WorkspaceLayout>
+  );
 }

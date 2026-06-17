@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { AppLayout } from "@/components/app/AppLayout";
-import { ToolPage } from "@/components/app/ToolPage";
-import { RegexTool } from "@/features/regex/RegexTool";
+import dynamic from "next/dynamic";
+import { WorkspaceLayout } from "@/components/app/WorkspaceLayout";
+import { ToolSeo } from "@/components/app/ToolSeo";
+import { ToolSkeleton } from "@/components/app/ToolSkeleton";
 import { toolBySlug } from "@/tools/registry";
 import { canonical } from "@/lib/site";
+
+const RegexTool = dynamic(() => import("@/features/regex/RegexTool").then((m) => m.RegexTool), { loading: () => <ToolSkeleton /> });
 
 const t = toolBySlug("regex-tester")!;
 export const metadata: Metadata = {
@@ -13,5 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <AppLayout><ToolPage slug="regex-tester"><RegexTool /></ToolPage></AppLayout>;
+  return (
+    <WorkspaceLayout slug="regex-tester">
+      <RegexTool />
+      <ToolSeo slug="regex-tester" />
+    </WorkspaceLayout>
+  );
 }

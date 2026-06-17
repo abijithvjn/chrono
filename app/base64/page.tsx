@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { AppLayout } from "@/components/app/AppLayout";
-import { ToolPage } from "@/components/app/ToolPage";
-import { Base64Tool } from "@/features/base64/Base64Tool";
+import dynamic from "next/dynamic";
+import { WorkspaceLayout } from "@/components/app/WorkspaceLayout";
+import { ToolSeo } from "@/components/app/ToolSeo";
+import { ToolSkeleton } from "@/components/app/ToolSkeleton";
 import { toolBySlug } from "@/tools/registry";
 import { canonical } from "@/lib/site";
+
+const Base64Tool = dynamic(() => import("@/features/base64/Base64Tool").then((m) => m.Base64Tool), { loading: () => <ToolSkeleton /> });
 
 const t = toolBySlug("base64")!;
 export const metadata: Metadata = {
@@ -13,5 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <AppLayout><ToolPage slug="base64"><Base64Tool /></ToolPage></AppLayout>;
+  return (
+    <WorkspaceLayout slug="base64">
+      <Base64Tool />
+      <ToolSeo slug="base64" />
+    </WorkspaceLayout>
+  );
 }

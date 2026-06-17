@@ -15,12 +15,16 @@ interface State {
   theme: Theme;
   paletteOpen: boolean;
   history: HistoryItem[];
+  favTools: string[];
+  recentTools: string[];
 
   setMoment: (ms: number, ns?: bigint, input?: string) => void;
   addRecent: (input: string, ms: number) => void;
   setTz: (tz: string) => void;
   setTheme: (t: Theme) => void;
   setPalette: (open: boolean) => void;
+  toggleFav: (slug: string) => void;
+  pushRecentTool: (slug: string) => void;
 }
 
 export const useStore = create<State>()(
@@ -33,6 +37,8 @@ export const useStore = create<State>()(
       theme: "light",
       paletteOpen: false,
       history: [],
+      favTools: [],
+      recentTools: [],
 
       setMoment: (ms, ns, input) => {
         const realNs = ns ?? BigInt(Math.round(ms)) * 1_000_000n;
@@ -56,10 +62,16 @@ export const useStore = create<State>()(
       setTz: (displayTz) => set({ displayTz }),
       setTheme: (theme) => set({ theme }),
       setPalette: (paletteOpen) => set({ paletteOpen }),
+      toggleFav: (slug) => set((s) => ({
+        favTools: s.favTools.includes(slug) ? s.favTools.filter((x) => x !== slug) : [...s.favTools, slug],
+      })),
+      pushRecentTool: (slug) => set((s) => ({
+        recentTools: [slug, ...s.recentTools.filter((x) => x !== slug)].slice(0, 8),
+      })),
     }),
     {
       name: "chrono",
-      partialize: (s) => ({ theme: s.theme, displayTz: s.displayTz, history: s.history }),
+      partialize: (s) => ({ theme: s.theme, displayTz: s.displayTz, history: s.history, favTools: s.favTools, recentTools: s.recentTools }),
     }
   )
 );
