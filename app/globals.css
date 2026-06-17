@@ -50,6 +50,15 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -
 }
 .toast-el.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* JSON syntax highlight tokens */
+.tok-key { color: var(--accent); }
+.tok-str { color: var(--good); }
+.tok-num { color: var(--accent-2); }
+.tok-bool { color: var(--warn); }
+.tok-null { color: var(--faint); }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }

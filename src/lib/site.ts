@@ -1,7 +1,7 @@
-export const SITE_URL = "https://epochtimeconverter.online";
-export const SITE_NAME = "Epoch Time Converter";
-export const SITE_TAGLINE = "The developer's timestamp & time-zone toolkit";
+export const SITE_URL = "https://devtoolskit.online";
+export const SITE_NAME = "DevToolsKit";
+export const SITE_TAGLINE = "The developer's toolkit";
 export const SITE_DESC =
-  "Convert Unix timestamps, ISO 8601, RFC dates, and time zones instantly. Free, fast, ad-free developer tools with code snippets in 14 languages.";
+  "A fast, ad-free suite of developer tools — Epoch converter, JSON formatter, Regex tester, Base64, Diff checker, Cron parser and more. Everything runs in your browser.";
 
 export const canonical = (path = "/") => SITE_URL + (path.endsWith("/") ? path : path + "/");

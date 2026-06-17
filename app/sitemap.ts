@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
+import { TOOLS } from "@/tools/registry";
 import { CONVERSIONS } from "@/content/conversions";
 import { LANG_PAGES } from "@/content/languages";
 import { TZ_PAGES } from "@/content/timezones";
@@ -10,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const paths = [
     "/", "/convert", "/code", "/timezone",
+    ...TOOLS.map((t) => `/${t.slug}`),
     ...CONVERSIONS.map((c) => `/convert/${c.slug}`),
     ...LANG_PAGES.map((l) => `/code/${l.slug}`),
     ...TZ_PAGES.map((t) => `/timezone/${t.slug}`),

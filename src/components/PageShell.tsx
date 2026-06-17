@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { SITE_NAME } from "@/lib/site";
+import { TOOLS } from "@/tools/registry";
 import { CONVERSIONS } from "@/content/conversions";
-import { LANG_PAGES } from "@/content/languages";
 import { TZ_PAGES } from "@/content/timezones";
 
 const NAV = [
@@ -34,9 +34,9 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   const cols: { title: string; links: { href: string; label: string }[] }[] = [
+    { title: "Tools", links: TOOLS.map((t) => ({ href: `/${t.slug}`, label: t.name })) },
     { title: "Conversions", links: CONVERSIONS.slice(0, 6).map((c) => ({ href: `/convert/${c.slug}`, label: c.h1.replace("Convert ", "") })) },
-    { title: "Languages", links: LANG_PAGES.slice(0, 7).map((l) => ({ href: `/code/${l.slug}`, label: l.lang })) },
-    { title: "Time zones", links: TZ_PAGES.map((t) => ({ href: `/timezone/${t.slug}`, label: `${t.abbr} time` })) },
+    { title: "Time zones", links: TZ_PAGES.slice(0, 6).map((t) => ({ href: `/timezone/${t.slug}`, label: `${t.abbr} time` })) },
   ];
   return (
     <footer className="mt-16 border-t border-border/60">
