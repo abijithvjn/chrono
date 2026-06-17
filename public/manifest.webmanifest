@@ -1,12 +1,12 @@
 {
-  "name": "Chrono — timestamp toolkit",
-  "short_name": "Chrono",
-  "description": "The fastest, cleanest timestamp tool for developers.",
+  "name": "DevToolsKit — Free Developer Tools",
+  "short_name": "DevToolsKit",
+  "description": "A fast, ad-free suite of developer tools — Epoch converter, JSON formatter, Regex tester, Base64, JWT decoder, hashing and more. Everything runs in your browser.",
   "start_url": ".",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0a0b0f",
-  "theme_color": "#0a0b0f",
+  "background_color": "#0B1020",
+  "theme_color": "#0B1020",
   "icons": [
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
   ]
