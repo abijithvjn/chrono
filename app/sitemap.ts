@@ -7,19 +7,27 @@ import { TZ_PAGES } from "@/content/timezones";
 
 export const dynamic = "force-static";
 
+type Freq = MetadataRoute.Sitemap[number]["changeFrequency"];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const paths = [
-    "/", "/convert", "/code", "/timezone",
-    ...TOOLS.map((t) => `/${t.slug}`),
-    ...CONVERSIONS.map((c) => `/convert/${c.slug}`),
-    ...LANG_PAGES.map((l) => `/code/${l.slug}`),
-    ...TZ_PAGES.map((t) => `/timezone/${t.slug}`),
-  ];
-  return paths.map((p) => ({
-    url: SITE_URL + (p.endsWith("/") ? p : p + "/"),
+  const entry = (p: string, priority: number, changeFrequency: Freq) => ({
+    url: SITE_URL + (p === "/" ? "/" : p + "/"),
     lastModified: now,
-    changeFrequency: p === "/" ? "daily" : "weekly",
-    priority: p === "/" ? 1 : p.split("/").length === 2 ? 0.8 : 0.7,
-  }));
+    changeFrequency,
+    priority,
+  });
+
+  return [
+    entry("/", 1.0, "daily"),
+    // Tool pages — highest after the homepage. Auto-generated from the registry.
+    ...TOOLS.map((t) => entry(`/${t.slug}`, 0.9, "weekly")),
+    // SEO hubs + long-tail content.
+    entry("/convert", 0.8, "weekly"),
+    entry("/code", 0.8, "weekly"),
+    entry("/timezone", 0.8, "weekly"),
+    ...CONVERSIONS.map((c) => entry(`/convert/${c.slug}`, 0.7, "monthly")),
+    ...LANG_PAGES.map((l) => entry(`/code/${l.slug}`, 0.7, "monthly")),
+    ...TZ_PAGES.map((t) => entry(`/timezone/${t.slug}`, 0.7, "monthly")),
+  ];
 }

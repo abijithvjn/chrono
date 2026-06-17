@@ -1,22 +1,21 @@
 import { Binary, Braces, Clock, GitCompare, Regex, Timer, type LucideIcon } from "lucide-react";
 
-// ── Tool registry ────────────────────────────────────────────────────────────
-// Single source of truth for the platform. The dashboard, sidebar, global search,
-// sitemap, and per-tool SEO are all driven by this array. Adding a future tool =
-// append one entry + create its /route page. Nothing else needs restructuring.
+// ── Tool registry — the single source of truth ───────────────────────────────
+// Drives routing metadata, sitemap, robots, structured data, navigation, search,
+// internal linking and OG images. Add a tool here (+ its long-form copy in
+// seoContent.ts and a thin route file) and everything else updates automatically.
 
 export interface Tool {
-  slug: string;            // route segment, e.g. "json-formatter"
+  slug: string;            // clean URL segment, e.g. "json-formatter"
   name: string;
   category: string;
-  short: string;           // one-line description (cards, sidebar tooltip)
+  short: string;           // one-line description (cards, sidebar)
   icon: LucideIcon;
-  accent: string;          // per-tool accent (hex) for cards & workspace
-  keywords: string[];      // powers global search
-  metaTitle: string;
+  accent: string;          // per-tool accent (hex)
+  keywords: string[];      // search + meta keywords
+  metaTitle: string;       // full <title> (already includes "| DevToolsKit")
   metaDescription: string;
   faqs: { q: string; a: string }[];
-  status?: "ready" | "soon";
 }
 
 export const CATEGORIES = ["Date & Time", "Encoding", "JSON", "Regex", "Utilities"] as const;
@@ -29,29 +28,14 @@ export const TOOLS: Tool[] = [
     short: "Convert Unix timestamps, ISO 8601, JWTs & more — instantly.",
     icon: Clock,
     accent: "#3B82F6",
-    keywords: ["epoch", "unix", "timestamp", "date", "time", "iso", "utc", "convert", "milliseconds"],
-    metaTitle: "Unix Timestamp Converter — Epoch Time to Date & Back",
+    keywords: ["epoch converter", "unix timestamp converter", "unix time", "timestamp to date", "date to timestamp", "milliseconds to date", "iso 8601 converter"],
+    metaTitle: "Epoch Converter - Unix Timestamp Converter | DevToolsKit",
     metaDescription:
-      "Paste any Unix timestamp, ISO 8601 date, JWT, JSON, or log line and instantly see every representation — UTC, local, ISO, RFC, relative — with code in 14 languages.",
+      "Free online Epoch Converter. Convert Unix timestamps to human-readable dates and back, with UTC, local time, ISO 8601, relative time and timezone support. Private and instant.",
     faqs: [
       { q: "What is a Unix timestamp?", a: "A single integer counting seconds since 1 January 1970 00:00:00 UTC — the most portable, zone-independent way to store an instant." },
       { q: "Does the converter run on a server?", a: "No. Every conversion happens locally in your browser — nothing is uploaded." },
-    ],
-  },
-  {
-    slug: "base64",
-    name: "Base64 Encoder / Decoder",
-    category: "Encoding",
-    short: "Encode and decode Base64 text and files, UTF-8 safe.",
-    icon: Binary,
-    accent: "#22C55E",
-    keywords: ["base64", "encode", "decode", "encoder", "decoder", "btoa", "atob", "file"],
-    metaTitle: "Base64 Encoder & Decoder — Text & Files, UTF-8 Safe",
-    metaDescription:
-      "Encode text to Base64 and decode Base64 to text, with auto-detect, file upload, download, and live byte counts. Free, fast, fully client-side.",
-    faqs: [
-      { q: "Is Base64 encryption?", a: "No. Base64 is an encoding, not encryption — it is fully reversible and provides no security. Use it for transport, not secrecy." },
-      { q: "Does this handle Unicode and files?", a: "Yes. Encoding is UTF-8 safe, and you can upload any file to get its Base64 (e.g. data URLs for images)." },
+      { q: "How do I tell seconds from milliseconds?", a: "Seconds are ~10 digits, milliseconds ~13, microseconds ~16, nanoseconds ~19. The converter auto-detects the unit, and you can override it." },
     ],
   },
   {
@@ -61,13 +45,14 @@ export const TOOLS: Tool[] = [
     short: "Pretty-print, minify, validate & explore JSON.",
     icon: Braces,
     accent: "#8B5CF6",
-    keywords: ["json", "format", "formatter", "pretty", "beautify", "minify", "validate", "validator", "lint"],
-    metaTitle: "JSON Formatter, Validator & Minifier — Free Online",
+    keywords: ["json formatter", "json validator", "json beautifier", "json pretty print", "json formatter online", "json minifier", "format json"],
+    metaTitle: "JSON Formatter - Format, Validate & Minify JSON Online | DevToolsKit",
     metaDescription:
-      "Pretty-print, minify and validate JSON with exact error line numbers, syntax highlighting, copy, download and upload. Handles large files, runs in your browser.",
+      "Free online JSON Formatter. Instantly format, validate, minify and explore JSON locally in your browser, with exact error line numbers and syntax highlighting. No uploads, fast and private.",
     faqs: [
       { q: "Where does my JSON go?", a: "Nowhere — it is parsed and formatted entirely in your browser. No data is sent to any server." },
       { q: "Why is my JSON invalid?", a: "Common causes are trailing commas, single quotes, or unquoted keys. The validator points to the exact line and column of the first error." },
+      { q: "Can it handle large JSON files?", a: "Yes. Formatting and validation are efficient; syntax highlighting is skipped above ~200 KB to keep it instant." },
     ],
   },
   {
@@ -77,13 +62,31 @@ export const TOOLS: Tool[] = [
     short: "Test patterns live with match highlighting & groups.",
     icon: Regex,
     accent: "#EC4899",
-    keywords: ["regex", "regexp", "regular expression", "match", "pattern", "test", "groups", "capture"],
-    metaTitle: "Regex Tester — Live Regular Expression Matching",
+    keywords: ["regex tester", "regex tester online", "test regular expressions", "regex match", "regex groups", "javascript regex tester", "regexp"],
+    metaTitle: "Regex Tester - Test Regular Expressions Online | DevToolsKit",
     metaDescription:
-      "Test JavaScript regular expressions against any text with live match highlighting, capture groups, match positions, all flags (gimsuy), and clear errors.",
+      "Free online Regex Tester. Test JavaScript regular expressions with live match highlighting, capture groups, match positions and every flag (gimsuy). Private and instant.",
     faqs: [
       { q: "Which regex flavour is this?", a: "JavaScript (ECMAScript) regular expressions, the same engine your browser and Node.js use." },
       { q: "What do the flags mean?", a: "g = global, i = case-insensitive, m = multiline, s = dotall, u = unicode, y = sticky. Toggle them to change matching behaviour." },
+      { q: "Are capture groups supported?", a: "Yes — each match lists its numbered capture groups and positions, including named groups." },
+    ],
+  },
+  {
+    slug: "base64-encoder",
+    name: "Base64 Encoder",
+    category: "Encoding",
+    short: "Encode and decode Base64 text and files, UTF-8 safe.",
+    icon: Binary,
+    accent: "#22C55E",
+    keywords: ["base64 encoder", "base64 decoder", "base64 encode", "base64 decode", "base64 online", "encode base64", "decode base64"],
+    metaTitle: "Base64 Encoder - Encode & Decode Base64 Online | DevToolsKit",
+    metaDescription:
+      "Free online Base64 Encoder & Decoder. Encode text to Base64 and decode it back, with auto-detect, file upload, data URLs and live byte counts. UTF-8 safe and fully client-side.",
+    faqs: [
+      { q: "Is Base64 encryption?", a: "No. Base64 is an encoding, not encryption — it is fully reversible and provides no security. Use it for transport, not secrecy." },
+      { q: "Does this handle Unicode and files?", a: "Yes. Encoding is UTF-8 safe, and you can upload any file to get its Base64 (e.g. data URLs for images)." },
+      { q: "Is my data uploaded?", a: "No. Encoding and decoding run entirely in your browser; nothing leaves your device." },
     ],
   },
   {
@@ -93,13 +96,14 @@ export const TOOLS: Tool[] = [
     short: "Compare two texts line by line, side-by-side or unified.",
     icon: GitCompare,
     accent: "#F59E0B",
-    keywords: ["diff", "compare", "difference", "text", "merge", "changes", "side by side", "unified"],
-    metaTitle: "Diff Checker — Compare Text Online (Side-by-Side)",
+    keywords: ["diff checker", "compare text", "text diff", "diff online", "compare two files", "side by side diff", "unified diff"],
+    metaTitle: "Diff Checker - Compare Text & Find Differences | DevToolsKit",
     metaDescription:
-      "Compare two blocks of text and highlight additions, removals and changes line by line. Side-by-side or unified view, ignore whitespace and case. Free & private.",
+      "Free online Diff Checker. Compare two blocks of text and highlight additions, removals and changes line by line, side-by-side or unified, with ignore-whitespace and ignore-case options.",
     faqs: [
       { q: "Is my text uploaded anywhere?", a: "No. The comparison runs entirely in your browser; your text never leaves your device." },
       { q: "Can it ignore whitespace or case?", a: "Yes — toggle the options to ignore leading/trailing whitespace or case differences before comparing." },
+      { q: "What diff algorithm is used?", a: "A longest-common-subsequence (LCS) line diff, the same approach used by tools like git for clear, minimal changes." },
     ],
   },
   {
@@ -109,13 +113,14 @@ export const TOOLS: Tool[] = [
     short: "Explain cron expressions & preview next runs.",
     icon: Timer,
     accent: "#06B6D4",
-    keywords: ["cron", "crontab", "schedule", "expression", "parser", "next run", "job"],
-    metaTitle: "Cron Expression Parser — Explain & Preview Runs",
+    keywords: ["cron parser", "cron expression", "crontab guru", "explain cron", "cron schedule", "cron next run", "cron expression generator"],
+    metaTitle: "Cron Parser - Explain Cron Expressions Online | DevToolsKit",
     metaDescription:
-      "Translate cron expressions into plain English, validate them, and preview the next execution times. Presets for every minute, hourly, daily, weekly and more.",
+      "Free online Cron Parser. Translate cron expressions into plain English, validate them, and preview the next execution times, with presets for every minute, hourly, daily, weekly and more.",
     faqs: [
       { q: "What cron format is supported?", a: "Standard 5-field cron: minute, hour, day-of-month, month, day-of-week — with ranges, lists, and step (*/n) syntax." },
-      { q: "Which timezone are the next runs in?", a: "Next execution times are computed in UTC so they are unambiguous; adjust for your local offset as needed." },
+      { q: "Which timezone are the next runs in?", a: "Next execution times are shown in both UTC and your local timezone so there is no ambiguity." },
+      { q: "Can I use presets?", a: "Yes — one click fills common schedules like every 5 minutes, hourly, daily at 09:00, weekdays, and monthly." },
     ],
   },
 ];

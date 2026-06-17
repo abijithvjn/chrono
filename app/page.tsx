@@ -3,11 +3,16 @@ import { DiscoverLayout } from "@/components/app/DiscoverLayout";
 import { Dashboard } from "@/components/app/Dashboard";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { TOOLS } from "@/tools/registry";
-import { SITE_NAME, SITE_DESC, canonical } from "@/lib/site";
+import { SITE_NAME, canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "DevToolsKit — Free Online Developer Tools",
-  description: SITE_DESC,
+  title: { absolute: "Developer Toolkit - Free Online Developer Tools | DevToolsKit" },
+  description:
+    "Free developer tools including Epoch Converter, JSON Formatter, Regex Tester, Base64 Encoder, Cron Parser, Diff Checker and more. Fast, private, browser-based utilities.",
+  keywords: [
+    "developer tools", "online developer tools", "free developer tools", "json formatter",
+    "regex tester", "epoch converter", "base64 encoder", "cron parser", "diff checker",
+  ],
   alternates: { canonical: canonical("/") },
 };
 

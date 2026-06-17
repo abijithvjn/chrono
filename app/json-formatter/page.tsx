@@ -3,17 +3,11 @@ import dynamic from "next/dynamic";
 import { WorkspaceLayout } from "@/components/app/WorkspaceLayout";
 import { ToolSeo } from "@/components/app/ToolSeo";
 import { ToolSkeleton } from "@/components/app/ToolSkeleton";
-import { toolBySlug } from "@/tools/registry";
-import { canonical } from "@/lib/site";
+import { toolMetadata } from "@/lib/toolMeta";
 
 const JsonTool = dynamic(() => import("@/features/json/JsonTool").then((m) => m.JsonTool), { loading: () => <ToolSkeleton /> });
 
-const t = toolBySlug("json-formatter")!;
-export const metadata: Metadata = {
-  title: t.metaTitle, description: t.metaDescription,
-  alternates: { canonical: canonical("/json-formatter") },
-  openGraph: { title: t.metaTitle, description: t.metaDescription, url: canonical("/json-formatter"), type: "website" },
-};
+export const metadata: Metadata = toolMetadata("json-formatter");
 
 export default function Page() {
   return (

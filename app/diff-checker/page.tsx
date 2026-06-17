@@ -3,17 +3,11 @@ import dynamic from "next/dynamic";
 import { WorkspaceLayout } from "@/components/app/WorkspaceLayout";
 import { ToolSeo } from "@/components/app/ToolSeo";
 import { ToolSkeleton } from "@/components/app/ToolSkeleton";
-import { toolBySlug } from "@/tools/registry";
-import { canonical } from "@/lib/site";
+import { toolMetadata } from "@/lib/toolMeta";
 
 const DiffTool = dynamic(() => import("@/features/diff/DiffTool").then((m) => m.DiffTool), { loading: () => <ToolSkeleton /> });
 
-const t = toolBySlug("diff-checker")!;
-export const metadata: Metadata = {
-  title: t.metaTitle, description: t.metaDescription,
-  alternates: { canonical: canonical("/diff-checker") },
-  openGraph: { title: t.metaTitle, description: t.metaDescription, url: canonical("/diff-checker"), type: "website" },
-};
+export const metadata: Metadata = toolMetadata("diff-checker");
 
 export default function Page() {
   return (
