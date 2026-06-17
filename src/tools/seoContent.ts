@@ -111,6 +111,132 @@ export const TOOL_CONTENT: Record<string, ToolContent> = {
     notes:
       "Standard cron has no “seconds” field — the smallest interval is one minute. Day-of-month and day-of-week are OR-combined when both are restricted, which surprises many people.",
   },
+
+  "jwt-decoder": {
+    intro:
+      "The JWT Decoder reads a JSON Web Token and shows you what's inside. A JWT has three Base64URL parts — header, payload and signature — separated by dots. This tool decodes the header and payload so you can inspect claims and expiry, all locally in your browser.",
+    benefits: [
+      "Decodes the header and payload into readable JSON.",
+      "Highlights time claims (iat, exp, nbf) as human dates and flags expiry.",
+      "Works entirely offline — the token never leaves your browser.",
+      "Helpful for debugging auth flows without a backend.",
+    ],
+    howto: [
+      { name: "Paste your token", text: "Paste a JWT (the xxxxx.yyyyy.zzzzz string) into the input." },
+      { name: "Inspect the claims", text: "Read the decoded header and payload, and check issued/expiry times." },
+      { name: "Verify separately", text: "Remember this does not verify the signature — validate that server-side with your key." },
+    ],
+    notes:
+      "A JWT is signed, not encrypted — anyone can read its payload, so never put secrets in it. Decoding ≠ verifying; always verify the signature and exp on the server before trusting a token.",
+  },
+
+  "uuid-generator": {
+    intro:
+      "The UUID Generator creates random version-4 UUIDs (also called GUIDs) using the browser's cryptographically secure random source. UUIDs are 128-bit identifiers used as database keys, request IDs and idempotency keys precisely because they can be generated independently without collisions.",
+    benefits: [
+      "Cryptographically random UUID v4 via crypto.randomUUID().",
+      "Generate in bulk — up to 100 at once.",
+      "Uppercase and hyphen-free options for different systems.",
+      "Copy all with one click.",
+    ],
+    howto: [
+      { name: "Choose how many", text: "Set the count and any formatting options (uppercase, hyphens)." },
+      { name: "Generate", text: "Click Generate for a fresh batch of random UUIDs." },
+      { name: "Copy", text: "Copy a single UUID or the whole list." },
+    ],
+    notes:
+      "UUID v4 is random, so values are unordered — fine for keys but poor for index locality. If you need time-sortable IDs, consider UUID v7 or ULID instead.",
+  },
+
+  "hash-generator": {
+    intro:
+      "The Hash Generator computes cryptographic hashes of any text using the browser's native Web Crypto API. A hash is a fixed-length fingerprint of input data, used for integrity checks, caching keys, deduplication and signatures.",
+    benefits: [
+      "SHA-1, SHA-256, SHA-384 and SHA-512 in one place.",
+      "Uses the audited, native Web Crypto API — no third-party crypto.",
+      "Instant, and fully local — input is never uploaded.",
+      "Copy any digest with one click.",
+    ],
+    howto: [
+      { name: "Enter text", text: "Type or paste the text you want to hash." },
+      { name: "Read the digests", text: "Every supported algorithm's hex digest updates instantly." },
+      { name: "Copy", text: "Copy the digest you need." },
+    ],
+    notes:
+      "MD5 and SHA-1 are not collision-resistant; prefer SHA-256 or stronger for security. Hashing is one-way — you cannot recover the input from a hash.",
+  },
+
+  "url-encoder": {
+    intro:
+      "The URL Encoder & Decoder percent-encodes text so it can travel safely inside URLs, and decodes it back. URLs may only contain a limited set of characters, so spaces, punctuation and non-ASCII must be escaped as %XX sequences.",
+    benefits: [
+      "Encode and decode in one place, with auto-handling of errors.",
+      "Component mode for query values and full-URL mode for whole links.",
+      "UTF-8 safe for non-ASCII text.",
+      "Runs entirely in your browser.",
+    ],
+    howto: [
+      { name: "Pick a direction & mode", text: "Choose Encode or Decode, and Component or Full URL." },
+      { name: "Enter your text", text: "Paste the URL, query value or encoded string." },
+      { name: "Copy the result", text: "Copy the encoded or decoded output." },
+    ],
+    notes:
+      "Use encodeURIComponent (component mode) for individual query parameters; encodeURI (full mode) preserves the structure of a complete URL. Encoding a value twice double-escapes the percent signs — a common bug.",
+  },
+
+  "color-converter": {
+    intro:
+      "The Color Converter translates a color between the formats front-end developers use every day — HEX, RGB and HSL — and previews it live. HEX is compact, RGB maps to channels, and HSL makes lightness and saturation tweaks intuitive.",
+    benefits: [
+      "Convert between HEX, RGB and HSL instantly.",
+      "Live swatch preview and a native color picker.",
+      "Paste any supported format and read the rest.",
+      "No uploads — everything is computed locally.",
+    ],
+    howto: [
+      { name: "Enter a color", text: "Type a HEX, RGB or HSL value, or use the color picker." },
+      { name: "Read every format", text: "The other formats update instantly alongside a preview." },
+      { name: "Copy", text: "Copy the format you need into your stylesheet." },
+    ],
+    notes:
+      "HSL is great for generating shades: keep hue and saturation, adjust lightness. Remember CSS hex is #RRGGBB (or #RGB shorthand), and HSL hue is in degrees (0–360).",
+  },
+
+  "number-base-converter": {
+    intro:
+      "The Number Base Converter converts integers between binary, octal, decimal and hexadecimal. Switching bases is constant in low-level work — reading memory addresses, bit masks, file permissions, color values and protocol fields.",
+    benefits: [
+      "Binary, octal, decimal and hex side by side.",
+      "BigInt precision — no rounding on huge values.",
+      "Enter a value in any base and read all others.",
+      "Handles negative numbers.",
+    ],
+    howto: [
+      { name: "Choose the input base", text: "Select whether your value is binary, octal, decimal or hex." },
+      { name: "Type the number", text: "Enter the value; the other bases update instantly." },
+      { name: "Copy", text: "Copy the representation you need." },
+    ],
+    notes:
+      "Hex is base-16 (0–9, a–f) and each digit maps to exactly four binary bits, which is why it's used for bytes and colors. Octal (base-8) still appears in Unix file permissions like 0755.",
+  },
+
+  "case-converter": {
+    intro:
+      "The Case Converter rewrites text into the naming conventions developers use — camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE — plus Title Case, sentence case and URL slugs. It detects word boundaries and re-joins them in the style you pick.",
+    benefits: [
+      "Ten output styles from a single input.",
+      "Smart word splitting from spaces, hyphens, underscores and camelCase.",
+      "Great for renaming variables, files, constants and slugs.",
+      "Copy any result with one click.",
+    ],
+    howto: [
+      { name: "Enter text", text: "Type or paste any words, identifiers or a sentence." },
+      { name: "Read the conversions", text: "Every case style updates instantly." },
+      { name: "Copy", text: "Copy the style you need." },
+    ],
+    notes:
+      "camelCase and PascalCase suit JS/Java identifiers; snake_case suits Python and SQL; kebab-case and slugs suit URLs, CSS classes and filenames; CONSTANT_CASE suits environment variables.",
+  },
 };
 
 export const contentBySlug = (slug: string) => TOOL_CONTENT[slug];

@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ArrowRight, CloudOff, Search, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { CATEGORIES, TOOLS, searchTools, toolBySlug, type Tool } from "@/tools/registry";
 
-const POPULAR = ["epoch-converter", "json-formatter", "base64", "regex-tester"];
-const RECENT = ["json-formatter", "regex-tester", "diff-checker", "cron-parser"];
+const POPULAR = ["epoch-converter", "json-formatter", "jwt-decoder", "uuid-generator"];
+const RECENT = ["jwt-decoder", "uuid-generator", "hash-generator", "color-converter"];
 
 const TRUST = [
   { icon: ShieldCheck, label: "100% Local" },
