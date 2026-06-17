@@ -6,14 +6,14 @@ import { useStore } from "@/store/useStore";
 import { SITE_NAME } from "@/lib/site";
 import { SiteFooter } from "@/components/PageShell";
 import { ThemeSwitch } from "./ThemeSwitch";
+import { Ambient } from "./Ambient";
 
 export function DiscoverLayout({ children }: { children: ReactNode }) {
   const setPalette = useStore((s) => s.setPalette);
   return (
     <div className="min-h-screen">
-      <div className="pointer-events-none fixed inset-0 -z-10"
-        style={{ background: "radial-gradient(1000px 520px at 85% -8%, var(--accent-glow), transparent 60%), radial-gradient(760px 460px at 0% 0%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 55%)" }} />
-      <header className="sticky top-0 z-30 border-b border-border/60 bg-bg/70 backdrop-blur-xl">
+      <Ambient />
+      <header className="sticky top-0 z-30 border-b border-border/60 bg-surface-1/60 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-6">
           <Link href="/" className="flex items-center gap-2.5">
             <span className="grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-accent to-accent-2 text-[15px] text-black">◷</span>

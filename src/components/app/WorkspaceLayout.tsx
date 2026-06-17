@@ -7,6 +7,7 @@ import { useMounted } from "@/lib/useMounted";
 import { toolBySlug } from "@/tools/registry";
 import { shareCurrentUrl } from "@/lib/share";
 import { ThemeSwitch } from "./ThemeSwitch";
+import { Ambient } from "./Ambient";
 
 export function WorkspaceLayout({ slug, children }: { slug: string; children: ReactNode }) {
   const tool = toolBySlug(slug);
@@ -22,12 +23,13 @@ export function WorkspaceLayout({ slug, children }: { slug: string; children: Re
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border/60 bg-bg/80 px-4 py-2.5 backdrop-blur-xl sm:px-6">
+      <Ambient />
+      <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border/60 bg-surface-1/60 px-4 py-2.5 backdrop-blur-xl sm:px-6">
         <Link href="/" className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-[13px] text-muted transition hover:bg-surface-2 hover:text-fg">
           <ChevronLeft size={16} /> <span className="hidden sm:inline">Toolkit</span>
         </Link>
         <div className="flex min-w-0 items-center gap-2">
-          {Icon && <Icon size={16} className="shrink-0 text-accent" />}
+          {Icon && <Icon size={16} className="shrink-0" style={{ color: tool?.accent }} />}
           <span className="truncate text-[14px] font-semibold tracking-tight">{tool?.name ?? "Tool"}</span>
         </div>
 

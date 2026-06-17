@@ -16,8 +16,9 @@ export function RelatedTools({ current }: { current: string }) {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {ordered.map((t) => (
           <Link key={t.slug} href={`/${t.slug}`}
-            className="group flex items-start gap-3 rounded-2xl border border-border bg-surface p-4 transition hover:-translate-y-0.5 hover:border-accent/50">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-border bg-surface-2 text-accent">
+            className="card-elev group flex items-start gap-3 rounded-2xl border border-border bg-surface p-4 shadow-soft">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border"
+              style={{ color: t.accent, background: `color-mix(in srgb, ${t.accent} 13%, transparent)`, borderColor: `color-mix(in srgb, ${t.accent} 28%, transparent)` }}>
               <t.icon size={16} />
             </span>
             <div className="min-w-0">

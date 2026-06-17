@@ -11,6 +11,7 @@ export interface Tool {
   category: string;
   short: string;           // one-line description (cards, sidebar tooltip)
   icon: LucideIcon;
+  accent: string;          // per-tool accent (hex) for cards & workspace
   keywords: string[];      // powers global search
   metaTitle: string;
   metaDescription: string;
@@ -27,6 +28,7 @@ export const TOOLS: Tool[] = [
     category: "Date & Time",
     short: "Convert Unix timestamps, ISO 8601, JWTs & more — instantly.",
     icon: Clock,
+    accent: "#3B82F6",
     keywords: ["epoch", "unix", "timestamp", "date", "time", "iso", "utc", "convert", "milliseconds"],
     metaTitle: "Unix Timestamp Converter — Epoch Time to Date & Back",
     metaDescription:
@@ -42,6 +44,7 @@ export const TOOLS: Tool[] = [
     category: "Encoding",
     short: "Encode and decode Base64 text and files, UTF-8 safe.",
     icon: Binary,
+    accent: "#22C55E",
     keywords: ["base64", "encode", "decode", "encoder", "decoder", "btoa", "atob", "file"],
     metaTitle: "Base64 Encoder & Decoder — Text & Files, UTF-8 Safe",
     metaDescription:
@@ -57,6 +60,7 @@ export const TOOLS: Tool[] = [
     category: "JSON",
     short: "Pretty-print, minify, validate & explore JSON.",
     icon: Braces,
+    accent: "#8B5CF6",
     keywords: ["json", "format", "formatter", "pretty", "beautify", "minify", "validate", "validator", "lint"],
     metaTitle: "JSON Formatter, Validator & Minifier — Free Online",
     metaDescription:
@@ -72,6 +76,7 @@ export const TOOLS: Tool[] = [
     category: "Regex",
     short: "Test patterns live with match highlighting & groups.",
     icon: Regex,
+    accent: "#EC4899",
     keywords: ["regex", "regexp", "regular expression", "match", "pattern", "test", "groups", "capture"],
     metaTitle: "Regex Tester — Live Regular Expression Matching",
     metaDescription:
@@ -87,6 +92,7 @@ export const TOOLS: Tool[] = [
     category: "Utilities",
     short: "Compare two texts line by line, side-by-side or unified.",
     icon: GitCompare,
+    accent: "#F59E0B",
     keywords: ["diff", "compare", "difference", "text", "merge", "changes", "side by side", "unified"],
     metaTitle: "Diff Checker — Compare Text Online (Side-by-Side)",
     metaDescription:
@@ -102,6 +108,7 @@ export const TOOLS: Tool[] = [
     category: "Utilities",
     short: "Explain cron expressions & preview next runs.",
     icon: Timer,
+    accent: "#06B6D4",
     keywords: ["cron", "crontab", "schedule", "expression", "parser", "next run", "job"],
     metaTitle: "Cron Expression Parser — Explain & Preview Runs",
     metaDescription:

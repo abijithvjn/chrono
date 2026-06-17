@@ -7,9 +7,11 @@ const config: Config = {
     extend: {
       colors: {
         bg: "var(--bg)",
+        "surface-1": "var(--surface-1)",
         surface: "var(--surface)",
         "surface-2": "var(--surface-2)",
         border: "var(--border)",
+        edge: "var(--edge)",
         fg: "var(--fg)",
         muted: "var(--muted)",
         faint: "var(--faint)",
@@ -25,8 +27,9 @@ const config: Config = {
       },
       borderRadius: { xl: "14px", "2xl": "18px" },
       boxShadow: {
-        soft: "0 1px 0 rgba(255,255,255,.03) inset, 0 10px 34px rgba(0,0,0,.40)",
-        glow: "0 0 0 1px var(--accent-ring), 0 0 30px var(--accent-glow)",
+        soft: "0 1px 0 rgba(255,255,255,.04) inset, 0 4px 18px rgba(0,0,0,.28)",
+        lift: "0 1px 0 rgba(255,255,255,.05) inset, 0 14px 36px rgba(0,0,0,.36)",
+        glow: "0 0 0 1px var(--accent-ring), 0 0 0 4px var(--accent-glow)",
       },
       keyframes: {
         "fade-up": { "0%": { opacity: "0", transform: "translateY(6px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },

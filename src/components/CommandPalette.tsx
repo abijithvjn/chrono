@@ -66,7 +66,7 @@ export function CommandPalette() {
                     return (
                       <button key={g.label + t.slug} onMouseEnter={() => setI(here)} onClick={() => go(t.slug)}
                         className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left transition ${here === i ? "bg-accent/15" : ""}`}>
-                        <t.icon size={15} className="shrink-0 text-accent" />
+                        <t.icon size={15} className="shrink-0" style={{ color: t.accent }} />
                         <span className="text-[13.5px] text-fg">{t.name}</span>
                         {g.label === "Recently used" && <Clock size={12} className="text-faint" />}
                         {isFav && <Star size={12} className="fill-warn text-warn" />}
