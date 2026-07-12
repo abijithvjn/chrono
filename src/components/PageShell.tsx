@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { SITE_NAME } from "@/lib/site";
 import { TOOLS } from "@/tools/registry";
 import { CONVERSIONS } from "@/content/conversions";
+import { LANG_PAGES } from "@/content/languages";
 import { TZ_PAGES } from "@/content/timezones";
 
 const NAV = [
@@ -33,25 +34,31 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
-  const cols: { title: string; links: { href: string; label: string }[] }[] = [
-    { title: "Tools", links: TOOLS.map((t) => ({ href: `/${t.slug}`, label: t.name })) },
-    { title: "Conversions", links: CONVERSIONS.slice(0, 6).map((c) => ({ href: `/convert/${c.slug}`, label: c.h1.replace("Convert ", "") })) },
-    { title: "Time zones", links: TZ_PAGES.slice(0, 6).map((t) => ({ href: `/timezone/${t.slug}`, label: `${t.abbr} time` })) },
+  const cols: { title: string; hub?: string; links: { href: string; label: string }[] }[] = [
+    { title: "Tools", hub: "/", links: TOOLS.map((t) => ({ href: `/${t.slug}`, label: t.name })) },
+    { title: "Conversions", hub: "/convert", links: CONVERSIONS.slice(0, 6).map((c) => ({ href: `/convert/${c.slug}`, label: c.h1.replace("Convert ", "") })) },
+    { title: "Languages", hub: "/code", links: LANG_PAGES.slice(0, 6).map((l) => ({ href: `/code/${l.slug}`, label: l.lang })) },
+    { title: "Time zones", hub: "/timezone", links: TZ_PAGES.slice(0, 6).map((t) => ({ href: `/timezone/${t.slug}`, label: `${t.abbr} time` })) },
   ];
   return (
     <footer className="mt-16 border-t border-border/60">
-      <div className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <div className="text-[14px] font-semibold">{SITE_NAME}</div>
           <p className="mt-2 text-[12.5px] text-muted">Fast, ad-free Unix timestamp & time-zone tools for developers. Everything runs in your browser.</p>
         </div>
         {cols.map((col) => (
           <div key={col.title}>
-            <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-faint">{col.title}</div>
+            <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-faint">
+              {col.hub ? <Link href={col.hub} className="transition hover:text-accent">{col.title}</Link> : col.title}
+            </div>
             <ul className="flex flex-col gap-1.5">
               {col.links.map((l) => (
                 <li key={l.href}><Link href={l.href} className="text-[12.5px] text-muted transition hover:text-accent">{l.label}</Link></li>
               ))}
+              {col.hub && col.hub !== "/" && (
+                <li><Link href={col.hub} className="text-[12.5px] text-accent transition hover:underline">View all →</Link></li>
+              )}
             </ul>
           </div>
         ))}

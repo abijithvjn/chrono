@@ -10,10 +10,10 @@ export const dynamic = "force-static";
 type Freq = MetadataRoute.Sitemap[number]["changeFrequency"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  // No lastModified: stamping every URL with the build time on each deploy
+  // teaches Google the value is unreliable, which hurts crawl prioritization.
   const entry = (p: string, priority: number, changeFrequency: Freq) => ({
     url: SITE_URL + (p === "/" ? "/" : p + "/"),
-    lastModified: now,
     changeFrequency,
     priority,
   });

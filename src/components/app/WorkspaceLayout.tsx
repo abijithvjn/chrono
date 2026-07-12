@@ -6,6 +6,7 @@ import { useStore } from "@/store/useStore";
 import { useMounted } from "@/lib/useMounted";
 import { toolBySlug } from "@/tools/registry";
 import { shareCurrentUrl } from "@/lib/share";
+import { SiteFooter } from "@/components/PageShell";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { Ambient } from "./Ambient";
 
@@ -49,6 +50,7 @@ export function WorkspaceLayout({ slug, children }: { slug: string; children: Re
       </header>
 
       <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-5 sm:px-6 sm:py-6">{children}</main>
+      <SiteFooter />
     </div>
   );
 }
